@@ -60,30 +60,22 @@ export default function ShufflePage({
 
       console.log("Starting canvas capture...");
 
-      // Clone the element to avoid modifying the DOM
-      const clonedElement = teamsRef.current.cloneNode(true);
-
-      // Remove SVGs to avoid html2canvas parsing issues with modern CSS color() functions
-      clonedElement.querySelectorAll("svg").forEach((svg) => svg.remove());
-
-      // Create a temporary container
-      const tempContainer = document.createElement("div");
-      tempContainer.appendChild(clonedElement);
-      tempContainer.style.position = "absolute";
-      tempContainer.style.left = "-9999px";
-      document.body.appendChild(tempContainer);
-
-      const canvas = await html2canvas(clonedElement, {
+      const canvas = await html2canvas(teamsRef.current, {
         backgroundColor: isDark ? "#0D1117" : "#FFFFFF",
-        scale: 2,
+        scale: 1, // Use 1x to reduce memory and avoid issues
         useCORS: true,
         allowTaint: true,
         logging: false,
-        imageTimeout: 10000,
+        imageTimeout: 0, // Disable image loading to avoid problematic SVGs
+        onclone: (clonedDoc) => {
+          // Remove all SVG and img elements to avoid color() function parsing
+          clonedDoc.querySelectorAll("svg, img").forEach((el) => el.remove());
+          // Also remove any elements with problematic inline styles
+          clonedDoc.querySelectorAll("[style*='color(']").forEach((el) => {
+            el.removeAttribute("style");
+          });
+        },
       });
-
-      // Clean up temporary container
-      document.body.removeChild(tempContainer);
 
       console.log("Canvas created, converting to blob...");
       canvas.toBlob((blob) => {
