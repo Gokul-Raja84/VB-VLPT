@@ -59,16 +59,31 @@ export default function ShufflePage({
       await new Promise((r) => setTimeout(r, 200)); // Wait for UI rendering
 
       console.log("Starting canvas capture...");
-      const canvas = await html2canvas(teamsRef.current, {
+
+      // Clone the element to avoid modifying the DOM
+      const clonedElement = teamsRef.current.cloneNode(true);
+
+      // Remove SVGs to avoid html2canvas parsing issues with modern CSS color() functions
+      clonedElement.querySelectorAll("svg").forEach((svg) => svg.remove());
+
+      // Create a temporary container
+      const tempContainer = document.createElement("div");
+      tempContainer.appendChild(clonedElement);
+      tempContainer.style.position = "absolute";
+      tempContainer.style.left = "-9999px";
+      document.body.appendChild(tempContainer);
+
+      const canvas = await html2canvas(clonedElement, {
         backgroundColor: isDark ? "#0D1117" : "#FFFFFF",
         scale: 2,
         useCORS: true,
         allowTaint: true,
-        logging: true, // Enable logging to see what's happening
+        logging: false,
         imageTimeout: 10000,
-        canvasWidth: teamsRef.current.offsetWidth * 2,
-        canvasHeight: teamsRef.current.offsetHeight * 2,
       });
+
+      // Clean up temporary container
+      document.body.removeChild(tempContainer);
 
       console.log("Canvas created, converting to blob...");
       canvas.toBlob((blob) => {
