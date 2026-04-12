@@ -46,27 +46,29 @@ export default function ShufflePage({ checkedInPlayers, numTeams, setNumTeams, i
     if (!teamsRef.current || isGenerating) return
     setIsGenerating(true)
     try {
-      // Small delay to ensure any animations are finished
-      await new Promise(r => setTimeout(r, 100))
+      await new Promise(r => setTimeout(r, 150)) // Wait for UI
 
       const canvas = await html2canvas(teamsRef.current, {
-        backgroundColor: isDark ? '#0D1117' : '#F0F4FF',
-        scale: 3, // HD quality
+        backgroundColor: isDark ? '#0D1117' : '#FFFFFF',
+        scale: 2, // Stable high quality
         useCORS: true,
+        allowTaint: true,
         logging: false,
-        windowWidth: 420, // ensure mobile layout scale
+        onclone: (clonedDoc) => {
+          // You can modify the cloned DOM here if needed
+          const el = clonedDoc.querySelector(`.${styles.results}`)
+          if (el) el.style.padding = '20px' // Add some padding to export
+        }
       })
 
-      const url = canvas.toDataURL('image/png', 1.0)
+      const url = canvas.toDataURL('image/png', 0.9)
       const link = document.createElement('a')
       link.href = url
-      link.download = `vb-vlpt-teams-${new Date().getTime()}.png`
-      document.body.appendChild(link)
+      link.download = `vb-vlpt-teams.png`
       link.click()
-      document.body.removeChild(link)
     } catch (err) {
-      console.error('Download failed', err)
-      alert('Failed to generate image. Please try again.')
+      console.error('Download error:', err)
+      alert('Generation failed. Try once more or take a screenshot.')
     } finally {
       setIsGenerating(false)
     }
@@ -134,7 +136,7 @@ export default function ShufflePage({ checkedInPlayers, numTeams, setNumTeams, i
                 <polyline points="7 10 12 15 17 10"/>
                 <line x1="12" y1="15" x2="12" y2="3"/>
               </svg>
-              {isGenerating ? 'Generating...' : 'Download HD'}
+              {isGenerating ? 'Generating...' : 'Download'}
             </button>
             <button
               className={styles.courtBtn}
