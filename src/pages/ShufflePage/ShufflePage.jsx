@@ -47,6 +47,9 @@ export default function ShufflePage({
       setTeams(result.teams);
       setBench(benchPlayers);
       setShuffleKey((k) => k + 1);
+      // Clear custom team names when shuffling
+      setCustomTeamNames({});
+      setEditingTeamId(null);
     }
   }, [checkedInPlayers, numTeams, useFunNames]);
 
