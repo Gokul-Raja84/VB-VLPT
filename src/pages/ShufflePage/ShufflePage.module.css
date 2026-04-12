@@ -63,15 +63,14 @@
 }
 
 .downloadResults {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--sp-4);
   padding: var(--sp-4);
   background: var(--bg);
   border-radius: var(--radius-md);
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
+  max-width: fit-content;
+  margin: 0 auto;
 }
 
 /* ── ACTION BAR ───────────────────────────────────────── */
