@@ -62,6 +62,18 @@
   padding: var(--sp-2) 0;
 }
 
+.downloadResults {
+  display: flex;
+  flex-direction: row;
+  gap: var(--sp-4);
+  padding: var(--sp-4);
+  background: var(--bg);
+  border-radius: var(--radius-md);
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 /* ── ACTION BAR ───────────────────────────────────────── */
 .actionBar {
   display: flex;
@@ -69,7 +81,9 @@
   margin-bottom: var(--sp-4);
 }
 
-.reshuffleBtn, .shareBtn, .courtBtn {
+.reshuffleBtn,
+.shareBtn,
+.courtBtn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,7 +125,7 @@
 
 .courtBtn {
   flex: 1.5;
-  background: linear-gradient(135deg, #FF5722 0%, #FFD000 100%);
+  background: linear-gradient(135deg, #ff5722 0%, #ffd000 100%);
   border: none;
   color: #fff;
   font-size: 12px;
@@ -119,5 +133,5 @@
 
 .courtBtn:hover {
   transform: scale(1.02);
-  box-shadow: 0 4px 16px rgba(255,87,34,0.4);
+  box-shadow: 0 4px 16px rgba(255, 87, 34, 0.4);
 }

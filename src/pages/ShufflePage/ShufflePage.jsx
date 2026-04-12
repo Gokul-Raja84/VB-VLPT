@@ -133,7 +133,29 @@ export default function ShufflePage({
       {/* Results */}
       {teams && (
         <>
-          <div ref={teamsRef} className={styles.results} key={shuffleKey}>
+          {/* Hidden container for download - teams side by side, no bench */}
+          <div
+            ref={teamsRef}
+            className={styles.downloadResults}
+            key={shuffleKey}
+            style={{
+              position: "absolute",
+              left: "-9999px",
+              top: "-9999px",
+              width: "auto",
+            }}
+          >
+            {teams.map((team) => (
+              <TeamCard
+                key={`${shuffleKey}-${team.id}`}
+                team={team}
+                animationDelay={0}
+              />
+            ))}
+          </div>
+
+          {/* Visible results - teams vertical, with bench */}
+          <div className={styles.results} key={shuffleKey}>
             {teams.map((team, i) => (
               <TeamCard
                 key={`${shuffleKey}-${team.id}`}
