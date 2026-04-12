@@ -15,15 +15,35 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: calc(var(--bottom-bar) + env(safe-area-inset-bottom, 0px));
+  height: calc(var(--bottom-bar) + 20px + env(safe-area-inset-bottom, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
   background: var(--surface);
   border-top: 1.5px solid var(--border);
   display: flex;
-  align-items: stretch;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   z-index: 100;
   box-shadow: 0 -2px 16px rgba(0,0,0,0.1);
+}
+
+.tabList {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  flex: 1;
+}
+
+.credit {
+  font-family: var(--font-body);
+  font-size: 9px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-bottom: 6px;
+  opacity: 0.8;
+  width: 100%;
+  text-align: center;
 }
 
 .tab {
