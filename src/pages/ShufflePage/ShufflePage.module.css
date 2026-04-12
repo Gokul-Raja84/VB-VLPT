@@ -67,8 +67,6 @@
   grid-template-columns: repeat(2, 1fr);
   gap: var(--sp-4);
   padding: var(--sp-4);
-  background: var(--bg);
-  border-radius: var(--radius-md);
   max-width: fit-content;
   margin: 0 auto;
 }

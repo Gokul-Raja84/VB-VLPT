@@ -60,11 +60,13 @@ export default function ShufflePage({
 
       const canvas = await html2canvas(teamsRef.current, {
         backgroundColor: isDark ? "#0D1117" : "#FFFFFF",
-        scale: 2, // High quality
+        scale: 2,
         useCORS: true,
-        allowTaint: true,
+        allowTaint: false,
         logging: false,
         imageTimeout: 10000,
+        windowWidth: teamsRef.current.scrollWidth,
+        windowHeight: teamsRef.current.scrollHeight,
       });
 
       canvas.toBlob((blob) => {
