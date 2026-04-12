@@ -73,16 +73,50 @@ export const ROLE_ORDER = [
 // ─── TEAM NAMES ───────────────────────────────────────────────────────────────
 // Used when fun-name mode is on. Picked in pairs (or triples for 3 teams), never repeated.
 export const TEAM_NAME_POOLS = [
-  ['Spikers',    'Blockers'],
-  ['Aces',       'Deuce'],
-  ['Smashers',   'Diggers'],
-  ['Storm',      'Thunder'],
-  ['Voltage',    'Current'],
-  ['Blazers',    'Frost'],
-  ['Phantoms',   'Titans'],
-  ['Apex',       'Nexus'],
-  ['Redline',    'Dropzone'],
-  ['Zero',       'Hero'],
+  // IPL style - franchise vibes
+  ['Super Kings', 'Titans'],
+  ['Knight Riders', 'Royals'],
+  ['Capitals', 'Sunrisers'],
+  ['Warriors', 'Giants'],
+  ['Blazers', 'Chargers'],
+
+  // Football / club vibes - the classics
+  ['United', 'City'],
+  ['Rovers', 'Athletic'],
+  ['Strikers FC', 'Dynamos'],
+  ['Red Devils', 'Blue Lions'],
+  ['Galacticos', 'Invincibles'],
+
+  // Volleyball aggressive vibes
+  ['Sky Smash', 'Net Ninjas'],
+  ['Block Party', 'Spike Syndicate'],
+  ['Airborne', 'Power Serve'],
+  ['Killshot', 'Quickset'],
+  ['Roofers', 'Jump Force'],
+
+  // Gen Z / internet culture vibes
+  ['No Cap', 'Lowkey'],
+  ['Main Character', 'NPC'],
+  ['Aura', 'Rizzlers'],
+  ['W Squad', 'Delulu'],
+  ['Sigma', 'Goated'],
+
+  // Gaming / anime / cool tech vibes
+  ['Phantom', 'Vortex'],
+  ['Shadow Ops', 'Cybercore'],
+  ['Neon Pulse', 'Void'],
+  ['Zenith', 'Hypernova'],
+  ['Drip Squad', 'Pixel Storm'],
+
+  // Fusion - sports + meme (chef's kiss 🔥)
+  ['Knight Riders', 'Sigma'],
+  ['Super Kings', 'No Cap'],
+  ['United', 'Aura'],
+  ['Goated', 'Titans'],
+  ['Sky Smash', 'Rizzlers'],
+  ['Royals', 'Main Character'],
+  ['Strikers FC', 'Neon Pulse'],
+  ['Red Devils', 'Phantom'],
 ]
 
 // For 3+ teams, fallback to Team A / B / C / D
