@@ -40,25 +40,36 @@ export default function ShufflePage({ checkedInPlayers, numTeams, setNumTeams, i
     }
   }, [checkedInPlayers, numTeams, useFunNames])
 
-  const handleShare = async () => {
-    if (!teamsRef.current) return
+  const [isGenerating, setIsGenerating] = useState(false)
+
+  const handleDownload = async () => {
+    if (!teamsRef.current || isGenerating) return
+    setIsGenerating(true)
     try {
+      // Small delay to ensure any animations are finished
+      await new Promise(r => setTimeout(r, 100))
+
       const canvas = await html2canvas(teamsRef.current, {
         backgroundColor: isDark ? '#0D1117' : '#F0F4FF',
-        scale: 2,
+        scale: 3, // HD quality
         useCORS: true,
+        logging: false,
+        windowWidth: 420, // ensure mobile layout scale
       })
-      const blob = await new Promise(r => canvas.toBlob(r, 'image/png'))
-      const file = new File([blob], 'vb-vlpt-teams.png', { type: 'image/png' })
-      if (navigator.share && navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file], title: 'VB VLPT Teams' })
-      } else {
-        const url = URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url; a.download = 'vb-vlpt-teams.png'; a.click()
-        URL.revokeObjectURL(url)
-      }
-    } catch (err) { console.error('Share failed', err) }
+
+      const url = canvas.toDataURL('image/png', 1.0)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `vb-vlpt-teams-${new Date().getTime()}.png`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    } catch (err) {
+      console.error('Download failed', err)
+      alert('Failed to generate image. Please try again.')
+    } finally {
+      setIsGenerating(false)
+    }
   }
 
   if (checkedInPlayers.length === 0) return null
@@ -117,13 +128,13 @@ export default function ShufflePage({ checkedInPlayers, numTeams, setNumTeams, i
               </svg>
               Reshuffle
             </button>
-            <button className={styles.shareBtn} onClick={handleShare}>
+            <button className={styles.shareBtn} onClick={handleDownload} disabled={isGenerating}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
-                <polyline points="16 6 12 2 8 6"/>
-                <line x1="12" y1="2" x2="12" y2="15"/>
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
               </svg>
-              Share
+              {isGenerating ? 'Generating...' : 'Download HD'}
             </button>
             <button
               className={styles.courtBtn}
