@@ -52,6 +52,21 @@ export default function ShufflePage({
 
   const [isGenerating, setIsGenerating] = useState(false);
   const [selectedBenchPlayer, setSelectedBenchPlayer] = useState(null);
+  const [customTeamNames, setCustomTeamNames] = useState({});
+  const [editingTeamId, setEditingTeamId] = useState(null);
+
+  const handleEditTeamName = (teamId, newName) => {
+    if (!newName.trim()) return;
+    setCustomTeamNames((prev) => ({
+      ...prev,
+      [teamId]: newName.trim(),
+    }));
+    setEditingTeamId(null);
+  };
+
+  const getDisplayTeamName = (team) => {
+    return customTeamNames[team.id] || team.name;
+  };
 
   const handleSwapWithTeam = (teamIndex, playerIndex) => {
     if (!selectedBenchPlayer || !teams) return;
@@ -186,6 +201,7 @@ export default function ShufflePage({
               <TeamCard
                 key={`${shuffleKey}-${team.id}`}
                 team={team}
+                displayName={getDisplayTeamName(team)}
                 animationDelay={0}
               />
             ))}
@@ -197,10 +213,15 @@ export default function ShufflePage({
               <TeamCard
                 key={`${shuffleKey}-${team.id}`}
                 team={team}
+                displayName={getDisplayTeamName(team)}
                 animationDelay={i * 80}
                 selectedBenchPlayer={selectedBenchPlayer}
                 teamIndex={i}
                 onSwap={handleSwapWithTeam}
+                isEditing={editingTeamId === team.id}
+                onEditStart={() => setEditingTeamId(team.id)}
+                onEditSave={(newName) => handleEditTeamName(team.id, newName)}
+                onEditCancel={() => setEditingTeamId(null)}
               />
             ))}
             <BenchCard

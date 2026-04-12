@@ -20,6 +20,7 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+  gap: var(--sp-2);
   margin-bottom: var(--sp-3);
 }
 
@@ -31,6 +32,69 @@
   text-transform: uppercase;
   letter-spacing: -0.02em;
   line-height: 0.9;
+  flex: 1;
+}
+
+.editIcon {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 18px;
+  padding: var(--sp-1);
+  transition: all var(--duration-fast) var(--ease-smooth);
+}
+
+.editIcon:hover {
+  color: var(--primary);
+  transform: scale(1.15);
+}
+
+.editContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex: 1;
+}
+
+.editInput {
+  flex: 1;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-style: italic;
+  font-size: 42px;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  background: var(--surface-raised);
+  border: 2px solid var(--primary);
+  color: var(--text);
+  padding: var(--sp-2);
+  border-radius: var(--radius-md);
+  outline: none;
+}
+
+.editInput:focus {
+  box-shadow: 0 0 0 3px rgba(26, 63, 216, 0.2);
+}
+
+.editBtn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--primary);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-smooth);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editBtn:hover {
+  background: var(--primary-hover, #1432b8);
+  transform: scale(1.05);
 }
 
 .playerCount {
@@ -39,6 +103,7 @@
   font-size: 13px;
   color: var(--text-muted);
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .playerList {
