@@ -1,0 +1,123 @@
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-4);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-style: italic;
+  font-size: 52px;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--text);
+}
+
+/* ── NAME TOGGLE ──────────────────────────────────────── */
+.nameToggle {
+  display: flex;
+  background: var(--surface-raised);
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--border);
+  padding: 3px;
+  margin: var(--sp-4) 0;
+}
+
+.togglePill {
+  flex: 1;
+  height: 40px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-smooth);
+}
+
+.togglePill.toggleOn {
+  background: var(--accent);
+  color: #000;
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .togglePill.toggleOn {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* ── RESULTS ──────────────────────────────────────────── */
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-4);
+  padding: var(--sp-2) 0;
+}
+
+/* ── ACTION BAR ───────────────────────────────────────── */
+.actionBar {
+  display: flex;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-4);
+}
+
+.reshuffleBtn, .shareBtn, .courtBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  height: 48px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-snappy);
+}
+
+.reshuffleBtn {
+  flex: 1;
+  background: transparent;
+  border: 2px solid var(--border-strong);
+  color: var(--text-secondary);
+}
+
+.reshuffleBtn:hover {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+.shareBtn {
+  flex: 1;
+  background: var(--primary-muted);
+  border: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+.shareBtn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.courtBtn {
+  flex: 1.5;
+  background: linear-gradient(135deg, #FF5722 0%, #FFD000 100%);
+  border: none;
+  color: #fff;
+  font-size: 12px;
+}
+
+.courtBtn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(255,87,34,0.4);
+}

@@ -1,0 +1,90 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.main {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── NAV ─────────────────────────────────────────────── */
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--bottom-bar) + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--surface);
+  border-top: 1.5px solid var(--border);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  z-index: 100;
+  box-shadow: 0 -2px 16px rgba(0,0,0,0.1);
+}
+
+.tab {
+  flex: 1;
+  max-width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  text-decoration: none;
+  color: var(--text-muted);
+  position: relative;
+  transition: color var(--duration-fast) var(--ease-smooth);
+  min-height: 44px;
+  padding-top: 8px;
+}
+
+.tab::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 25%;
+  right: 25%;
+  height: 3px;
+  background: transparent;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  transition: background var(--duration-base);
+}
+
+.tab:hover {
+  color: var(--text-secondary);
+}
+
+.tab.active {
+  color: var(--primary);
+}
+
+.tab.active::after {
+  background: var(--primary);
+}
+
+/* Dark mode: yellow active */
+[data-theme="dark"] .tab.active {
+  color: var(--accent);
+}
+[data-theme="dark"] .tab.active::after {
+  background: var(--accent);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}

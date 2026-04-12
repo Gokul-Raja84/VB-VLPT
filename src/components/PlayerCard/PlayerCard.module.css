@@ -1,0 +1,146 @@
+.card {
+  display: flex;
+  align-items: stretch;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: transform var(--duration-fast) var(--ease-snappy),
+              box-shadow var(--duration-fast) var(--ease-smooth),
+              background var(--duration-base) var(--ease-smooth),
+              border-color var(--duration-base) var(--ease-smooth);
+  position: relative;
+}
+
+/* ── ACCENT BAR ─────────────────────────────────────── */
+.accentBar {
+  width: 4px;
+  flex-shrink: 0;
+  background: var(--role-color);
+  opacity: 0.5;
+  transition: opacity var(--duration-base);
+}
+
+/* ── BODY ───────────────────────────────────────────── */
+.body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--sp-3);
+  min-height: 72px;
+  gap: var(--sp-3);
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-width: 0;
+}
+
+.name {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--duration-base);
+}
+
+.right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* ── CHECKIN MODE ───────────────────────────────────── */
+.checkinCard {
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkinCard:hover {
+  border-color: var(--role-color);
+  box-shadow: var(--shadow-md);
+}
+
+.checkinCard:active {
+  animation: checkIn 240ms var(--ease-snappy);
+}
+
+.checked {
+  background: color-mix(in srgb, var(--role-color) 10%, var(--surface));
+  border-color: var(--role-color);
+}
+
+.checked .accentBar {
+  opacity: 1;
+}
+
+.checked .name {
+  color: var(--role-color);
+}
+
+/* ── CHECK CIRCLE ───────────────────────────────────── */
+.checkCircle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all var(--duration-base) var(--ease-snappy);
+  flex-shrink: 0;
+}
+
+.checkFilled {
+  background: var(--role-color);
+  border-color: var(--role-color);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--role-color) 50%, transparent);
+}
+
+/* ── ROSTER MODE ────────────────────────────────────── */
+.rosterCard {
+  cursor: default;
+}
+
+.actions {
+  display: flex;
+  gap: var(--sp-1);
+}
+
+.iconBtn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-smooth);
+}
+
+.iconBtn:hover {
+  background: var(--bg-subtle);
+  color: var(--text);
+}
+
+.deleteBtn:hover {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+@keyframes checkIn {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}

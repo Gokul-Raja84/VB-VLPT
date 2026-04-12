@@ -1,0 +1,25 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--role-color);
+  color: var(--role-color);
+  background: var(--role-bg);
+  white-space: nowrap;
+  line-height: 1.6;
+  transition: box-shadow var(--duration-fast);
+}
+
+.badge.glow {
+  box-shadow: 0 0 8px rgba(var(--role-color), 0.35);
+}
+
+[data-theme="dark"] .badge {
+  background: color-mix(in srgb, var(--role-color) 14%, transparent);
+}

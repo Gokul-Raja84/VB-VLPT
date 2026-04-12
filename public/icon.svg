@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="112" fill="#080E1A"/>
+  <!-- VB wordmark -->
+  <text x="256" y="200" font-family="'Arial Black', sans-serif" font-weight="900"
+        font-size="140" fill="#FFD000" text-anchor="middle" letter-spacing="-4">VB</text>
+  <!-- Volleyball circle -->
+  <circle cx="256" cy="340" r="90" fill="none" stroke="#FFFFFF" stroke-width="8"/>
+  <path d="M 256 250 Q 310 290 310 340 Q 310 390 256 430" fill="none" stroke="#FFD000" stroke-width="8"/>
+  <path d="M 256 250 Q 202 290 202 340 Q 202 390 256 430" fill="none" stroke="#FFFFFF" stroke-width="6"/>
+  <line x1="166" y1="310" x2="346" y2="310" stroke="#FFFFFF" stroke-width="6"/>
+</svg>

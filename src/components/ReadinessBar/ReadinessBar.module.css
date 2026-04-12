@@ -1,0 +1,129 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sectionLabel {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+/* ── STEPPER ─────────────────────────────────────────── */
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: var(--surface-raised);
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--border);
+  padding: var(--sp-1) var(--sp-2);
+}
+
+.stepBtn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-full);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-smooth);
+  line-height: 1;
+}
+
+.stepBtn:hover:not(:disabled) {
+  background: var(--accent-muted);
+  color: var(--accent);
+}
+
+.stepBtn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.stepValue {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text);
+  min-width: 62px;
+  text-align: center;
+}
+
+/* ── ROLE TILES ──────────────────────────────────────── */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--sp-2);
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: var(--sp-2) var(--sp-1);
+  border-radius: var(--radius-md);
+  border: 1.5px solid transparent;
+  transition: all var(--duration-base) var(--ease-smooth);
+}
+
+.tileOk {
+  background: color-mix(in srgb, var(--rc) 12%, var(--surface));
+  border-color: color-mix(in srgb, var(--rc) 30%, transparent);
+}
+
+.tileBad {
+  background: var(--danger-bg);
+  border-color: var(--danger);
+  animation: subtleShake 0.4s ease-out;
+}
+
+.tileRole {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tileOk .tileRole { color: var(--rc); }
+.tileBad .tileRole { color: var(--danger); }
+
+.tileCount {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.tileSlash {
+  font-weight: 600;
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.countOk { color: var(--success); }
+.countBad { color: var(--danger); }
+
+@keyframes subtleShake {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-3px); }
+  75%       { transform: translateX(3px); }
+}

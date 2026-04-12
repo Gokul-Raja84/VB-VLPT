@@ -1,0 +1,68 @@
+.card {
+  border-radius: var(--radius-lg);
+  border: 1.5px solid color-mix(in srgb, var(--tc) 40%, var(--border));
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  animation: slideUp var(--duration-slow) var(--ease-snappy) both;
+}
+
+.stripe {
+  height: 8px;
+  background: var(--tc);
+}
+
+.content {
+  padding: var(--sp-4);
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--sp-3);
+}
+
+.teamName {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-style: italic;
+  font-size: 56px;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+}
+
+.playerCount {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.playerList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.playerRow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--surface-raised);
+  border-radius: var(--radius-md);
+}
+
+.playerName {
+  font-weight: 600;
+  font-size: var(--text-base);
+  color: var(--text);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

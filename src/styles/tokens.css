@@ -1,0 +1,168 @@
+/* ═══════════════════════════════════════════════════════
+   VB VLPT — Design Tokens
+   Sporty · Bold · Energetic
+   Fonts: Barlow Condensed (display) + DM Sans (body)
+   ═══════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap');
+
+/* ─── COLOR SYSTEM ────────────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --bg:             #F0F4FF;
+  --bg-subtle:      #E8EDFB;
+  --surface:        #FFFFFF;
+  --surface-raised: #FFFFFF;
+  --overlay:        rgba(10, 20, 60, 0.45);
+
+  /* Brand */
+  --primary:        #1A3FD8;   /* electric sport blue */
+  --primary-hover:  #1432B8;
+  --primary-muted:  #EEF2FF;
+  --accent:         #FFD000;   /* volleyball yellow */
+  --accent-hover:   #F5C800;
+  --accent-muted:   #FFFBE6;
+  --cta:            #FF5722;   /* spike orange — for primary CTAs */
+  --cta-hover:      #E64A19;
+
+  /* Text */
+  --text:           #0D1117;
+  --text-secondary: #374151;
+  --text-muted:     #6B7280;
+  --text-faint:     #9CA3AF;
+  --text-on-dark:   #FFFFFF;
+
+  /* Semantic */
+  --success:        #22C55E;
+  --success-bg:     #DCFCE7;
+  --danger:         #EF4444;
+  --danger-bg:      #FEE2E2;
+  --warning:        #F59E0B;
+  --warning-bg:     #FEF3C7;
+
+  /* Borders & Shadows */
+  --border:         #E2E8F0;
+  --border-strong:  #CBD5E1;
+  --shadow-sm:      0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+  --shadow-md:      0 4px 12px rgba(0,0,0,.10), 0 2px 4px rgba(0,0,0,.06);
+  --shadow-lg:      0 10px 30px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+  --shadow-card:    0 2px 8px rgba(26,63,216,.08);
+
+  /* Role Colors */
+  --role-setter:         #1A3FD8;
+  --role-setter-bg:      #EEF2FF;
+  --role-left:           #FF5722;
+  --role-left-bg:        #FFF3F0;
+  --role-right:          #D81B8C;
+  --role-right-bg:       #FDE8F5;
+  --role-middle:         #7C3AED;
+  --role-middle-bg:      #F3EDFF;
+  --role-libero:         #059669;
+  --role-libero-bg:      #ECFDF5;
+
+  /* Team Card Colors */
+  --team-0-bg:      #EEF2FF;
+  --team-0-accent:  #1A3FD8;
+  --team-1-bg:      #FFF8E7;
+  --team-1-accent:  #B45309;
+  --team-2-bg:      #F3EDFF;
+  --team-2-accent:  #7C3AED;
+  --team-3-bg:      #ECFDF5;
+  --team-3-accent:  #059669;
+
+  /* Typography */
+  --font-display:   'Barlow Condensed', sans-serif;
+  --font-body:      'DM Sans', sans-serif;
+
+  --text-xs:    0.72rem;   /* 11.5px */
+  --text-sm:    0.875rem;  /* 14px   */
+  --text-base:  1rem;      /* 16px   */
+  --text-lg:    1.125rem;  /* 18px   */
+  --text-xl:    1.25rem;   /* 20px   */
+  --text-2xl:   1.5rem;    /* 24px   */
+  --text-3xl:   1.875rem;  /* 30px   */
+  --text-4xl:   2.25rem;   /* 36px   */
+  --text-5xl:   3rem;      /* 48px   */
+  --text-6xl:   3.75rem;   /* 60px   */
+
+  /* Spacing */
+  --sp-1:  0.25rem;
+  --sp-2:  0.5rem;
+  --sp-3:  0.75rem;
+  --sp-4:  1rem;
+  --sp-5:  1.25rem;
+  --sp-6:  1.5rem;
+  --sp-8:  2rem;
+  --sp-10: 2.5rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+
+  /* Radii */
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --ease-snappy:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth:  cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast:   120ms;
+  --duration-base:   220ms;
+  --duration-slow:   380ms;
+
+  /* Layout */
+  --max-width:      420px;   /* mobile-first, feels native */
+  --nav-height:     60px;
+  --bottom-bar:     72px;
+}
+
+/* ─── RESET & BASE ────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--text);
+  background: var(--bg);
+  min-height: 100dvh;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+/* ─── TYPOGRAPHY UTILITIES ───────────────────────────── */
+.display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  line-height: 0.95;
+}
+
+.display-xl { font-size: var(--text-6xl); }
+.display-lg { font-size: var(--text-5xl); }
+.display-md { font-size: var(--text-4xl); }
+.display-sm { font-size: var(--text-3xl); }
+
+/* ─── SCROLLBAR ───────────────────────────────────────── */
+::-webkit-scrollbar        { width: 4px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: var(--border-strong); border-radius: 99px; }
+
+/* ─── FOCUS ───────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
