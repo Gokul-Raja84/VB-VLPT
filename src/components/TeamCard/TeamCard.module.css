@@ -54,6 +54,18 @@
   padding: var(--sp-2) var(--sp-3);
   background: var(--surface-raised);
   border-radius: var(--radius-md);
+  transition: all var(--duration-fast) var(--ease-smooth);
+}
+
+.playerRow.swappable {
+  background: rgba(26, 63, 216, 0.15);
+  border: 1.5px solid var(--primary);
+  cursor: pointer;
+}
+
+.playerRow.swappable:hover {
+  background: rgba(26, 63, 216, 0.25);
+  box-shadow: 0 0 8px rgba(26, 63, 216, 0.3);
 }
 
 .playerName {
@@ -63,6 +75,12 @@
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(28px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

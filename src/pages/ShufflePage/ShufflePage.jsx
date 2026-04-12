@@ -51,6 +51,41 @@ export default function ShufflePage({
   }, [checkedInPlayers, numTeams, useFunNames]);
 
   const [isGenerating, setIsGenerating] = useState(false);
+  const [selectedBenchPlayer, setSelectedBenchPlayer] = useState(null);
+
+  const handleSwapWithTeam = (teamIndex, playerIndex) => {
+    if (!selectedBenchPlayer || !teams) return;
+
+    // Only allow swaps between same role
+    if (
+      selectedBenchPlayer.role !== teams[teamIndex].players[playerIndex].role
+    ) {
+      alert(
+        `Can only swap ${selectedBenchPlayer.role}s with ${selectedBenchPlayer.role}s`,
+      );
+      return;
+    }
+
+    // Create new teams with the swap
+    const newTeams = teams.map((team, ti) => {
+      if (ti !== teamIndex) return team;
+      return {
+        ...team,
+        players: team.players.map((p, pi) =>
+          pi === playerIndex ? selectedBenchPlayer : p,
+        ),
+      };
+    });
+
+    // Create new bench
+    const newBench = bench
+      .filter((p) => p.id !== selectedBenchPlayer.id)
+      .concat(teams[teamIndex].players[playerIndex]);
+
+    setTeams(newTeams);
+    setBench(newBench);
+    setSelectedBenchPlayer(null);
+  };
 
   const handleDownload = async () => {
     if (!teamsRef.current || isGenerating) return;
@@ -163,9 +198,16 @@ export default function ShufflePage({
                 key={`${shuffleKey}-${team.id}`}
                 team={team}
                 animationDelay={i * 80}
+                selectedBenchPlayer={selectedBenchPlayer}
+                teamIndex={i}
+                onSwap={handleSwapWithTeam}
               />
             ))}
-            <BenchCard bench={bench} />
+            <BenchCard
+              bench={bench}
+              selectedPlayerId={selectedBenchPlayer?.id}
+              onSelectPlayer={setSelectedBenchPlayer}
+            />
           </div>
 
           <div className={styles.actionBar}>
