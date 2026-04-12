@@ -6,7 +6,7 @@ import TeamCard from "../../components/TeamCard/TeamCard";
 import BenchCard from "../../components/BenchCard/BenchCard";
 import ReadinessBar from "../../components/ReadinessBar/ReadinessBar";
 import ThemeToggle from "../../components/ThemeToggle/ThemeToggle";
-import html2canvas from "html2canvas";
+import html2canvas from "html2canvas-pro";
 import styles from "./ShufflePage.module.css";
 
 export default function ShufflePage({
@@ -58,29 +58,17 @@ export default function ShufflePage({
     try {
       await new Promise((r) => setTimeout(r, 200)); // Wait for UI rendering
 
-      console.log("Starting canvas capture...");
-
       const canvas = await html2canvas(teamsRef.current, {
         backgroundColor: isDark ? "#0D1117" : "#FFFFFF",
-        scale: 1, // Use 1x to reduce memory and avoid issues
+        scale: 2, // High quality
         useCORS: true,
         allowTaint: true,
         logging: false,
-        imageTimeout: 0, // Disable image loading to avoid problematic SVGs
-        onclone: (clonedDoc) => {
-          // Remove all SVG and img elements to avoid color() function parsing
-          clonedDoc.querySelectorAll("svg, img").forEach((el) => el.remove());
-          // Also remove any elements with problematic inline styles
-          clonedDoc.querySelectorAll("[style*='color(']").forEach((el) => {
-            el.removeAttribute("style");
-          });
-        },
+        imageTimeout: 10000,
       });
 
-      console.log("Canvas created, converting to blob...");
       canvas.toBlob((blob) => {
         if (blob) {
-          console.log("Blob created, downloading...");
           const url = URL.createObjectURL(blob);
           const link = document.createElement("a");
           link.href = url;
@@ -89,9 +77,7 @@ export default function ShufflePage({
           link.click();
           document.body.removeChild(link);
           URL.revokeObjectURL(url);
-          console.log("Download complete!");
         } else {
-          console.error("Failed to create blob");
           alert("Generation failed. Try once more.");
         }
         setIsGenerating(false);
