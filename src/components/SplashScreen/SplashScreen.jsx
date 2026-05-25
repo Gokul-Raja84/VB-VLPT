@@ -95,31 +95,83 @@ export default function SplashScreen({ onComplete }) {
         <div className={styles.ballTrack}>
           <div className={styles.ball}>
             <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="ballYellow" cx="32%" cy="22%" r="78%">
+                  <stop offset="0%" stopColor="#FFE56B" />
+                  <stop offset="55%" stopColor="#FFD000" />
+                  <stop offset="100%" stopColor="#DFA900" />
+                </radialGradient>
+                <radialGradient id="ballBlue" cx="32%" cy="20%" r="82%">
+                  <stop offset="0%" stopColor="#5D8DFF" />
+                  <stop offset="58%" stopColor="#1A54E8" />
+                  <stop offset="100%" stopColor="#1236A4" />
+                </radialGradient>
+                <clipPath id="ballClip">
+                  <circle cx="22" cy="22" r="20" />
+                </clipPath>
+              </defs>
+
               <circle
                 cx="22"
                 cy="22"
                 r="20"
-                fill="rgba(255,255,255,0.04)"
-                stroke="currentColor"
-                strokeWidth="1.8"
+                fill="url(#ballYellow)"
               />
-              <path
-                d="M22 2 Q36 13 36 22 Q36 34 22 42"
+              <g clipPath="url(#ballClip)">
+                <path
+                  d="M-2 15 C8 12 15 12 22 15 C29 18 36 18 46 15 L46 29 C36 32 29 32 22 29 C15 26 8 26 -2 29 Z"
+                  fill="url(#ballBlue)"
+                />
+                <path
+                  d="M7 -4 C11 7 12 14 10 21 C8 28 7 35 10 48 L-5 48 L-5 -4 Z"
+                  fill="url(#ballBlue)"
+                />
+                <path
+                  d="M34 -4 C32 7 32 14 34 21 C36 28 37 35 34 48 L49 48 L49 -4 Z"
+                  fill="url(#ballBlue)"
+                />
+                <path
+                  d="M16 -4 H28 C27 5 27 10 28 14 C24 13 20 13 16 14 C17 10 17 5 16 -4 Z"
+                  fill="url(#ballYellow)"
+                />
+                <path
+                  d="M16 48 H28 C27 39 27 34 28 30 C24 31 20 31 16 30 C17 34 17 39 16 48 Z"
+                  fill="url(#ballYellow)"
+                />
+                <path
+                  d="M0 22 C9 19 15 19 22 22 C29 25 35 25 44 22"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.34)"
+                  strokeWidth="0.8"
+                />
+                <path
+                  d="M10 -2 C14 10 14 17 12 22 C10 27 10 34 14 46"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.22)"
+                  strokeWidth="0.65"
+                />
+                <path
+                  d="M34 -2 C30 10 30 17 32 22 C34 27 34 34 30 46"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.2)"
+                  strokeWidth="0.65"
+                />
+              </g>
+              <circle
+                cx="22"
+                cy="22"
+                r="20"
                 fill="none"
-                stroke="#FFD000"
-                strokeWidth="2"
+                stroke="rgba(255,255,255,0.42)"
+                strokeWidth="1.2"
               />
-              <path
-                d="M22 2 Q8 13 8 22 Q8 34 22 42"
-                fill="none"
-                stroke="#4D7EFF"
-                strokeWidth="1.8"
-              />
-              <path
-                d="M2 19 Q13 16 22 22 Q31 28 42 25"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.4"
+              <ellipse
+                cx="16"
+                cy="12"
+                rx="9"
+                ry="5"
+                fill="rgba(255,255,255,0.18)"
+                transform="rotate(-18 16 12)"
               />
             </svg>
           </div>
