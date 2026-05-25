@@ -1,0 +1,308 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-4);
+  background: var(--overlay);
+  animation: fadeIn 180ms var(--ease-smooth);
+}
+
+.modal {
+  position: relative;
+  width: min(100%, var(--max-width));
+  max-height: calc(100dvh - var(--sp-8));
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: var(--sp-5);
+  animation: scaleIn 260ms var(--ease-snappy);
+}
+
+.handle {
+  width: 40px;
+  height: 4px;
+  margin: 0 auto var(--sp-4);
+  border-radius: var(--radius-full);
+  background: var(--border-strong);
+}
+
+.closeBtn {
+  position: absolute;
+  top: var(--sp-4);
+  right: var(--sp-4);
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color var(--duration-fast),
+    border-color var(--duration-fast),
+    transform var(--duration-fast);
+}
+
+.closeBtn:hover {
+  color: var(--text);
+  border-color: var(--accent);
+  transform: scale(1.04);
+}
+
+.kicker,
+.label,
+.slotCount,
+.progress {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.kicker {
+  font-size: 12px;
+  color: var(--accent);
+  margin-bottom: var(--sp-1);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 38px;
+  font-style: italic;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--text);
+  text-transform: uppercase;
+  margin-bottom: var(--sp-5);
+}
+
+.countField {
+  display: grid;
+  grid-template-columns: 52px 1fr 52px;
+  gap: var(--sp-2);
+  align-items: center;
+  margin-bottom: var(--sp-3);
+}
+
+.stepperBtn,
+.countInput,
+.input,
+.playerInput,
+.teamTab {
+  border: 2px solid var(--border);
+  background: var(--bg-subtle);
+  color: var(--text);
+  transition:
+    border-color var(--duration-fast),
+    box-shadow var(--duration-fast),
+    transform var(--duration-fast);
+}
+
+.stepperBtn {
+  height: 52px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.countInput {
+  width: 100%;
+  height: 64px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 900;
+  outline: none;
+}
+
+.helper {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin-bottom: var(--sp-5);
+}
+
+.formHeader,
+.playersHeader,
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+
+.progress {
+  padding: 6px 10px;
+  border-radius: var(--radius-full);
+  background: var(--accent-muted);
+  color: var(--accent);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.teamTabs {
+  display: flex;
+  gap: var(--sp-2);
+  overflow-x: auto;
+  padding-bottom: var(--sp-2);
+  margin: calc(-1 * var(--sp-2)) 0 var(--sp-3);
+}
+
+.teamTab {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.teamTabActive {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  transform: scale(1.06);
+}
+
+[data-theme="dark"] .teamTabActive {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+}
+
+.label {
+  display: block;
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-bottom: var(--sp-2);
+}
+
+.input,
+.playerInput {
+  width: 100%;
+  height: 50px;
+  border-radius: var(--radius-md);
+  padding: 0 var(--sp-3);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 600;
+  outline: none;
+}
+
+.input {
+  margin-bottom: var(--sp-4);
+}
+
+.input:focus,
+.playerInput:focus,
+.countInput:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-muted);
+}
+
+.playersHeader {
+  margin-bottom: var(--sp-2);
+}
+
+.slotCount {
+  color: var(--text-faint);
+  font-size: 11px;
+}
+
+.playerGrid {
+  display: grid;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-4);
+}
+
+.error {
+  padding: var(--sp-2) var(--sp-3);
+  margin-bottom: var(--sp-3);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius-md);
+  background: var(--danger-bg);
+  color: var(--danger);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.actions {
+  margin-top: var(--sp-2);
+}
+
+.primaryBtn,
+.secondaryBtn {
+  min-height: 52px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    transform var(--duration-fast) var(--ease-snappy),
+    box-shadow var(--duration-fast);
+}
+
+.primaryBtn {
+  width: 100%;
+  border: none;
+  background: linear-gradient(135deg, #ff5722 0%, #ffd000 100%);
+  color: #fff;
+}
+
+.actions .primaryBtn {
+  flex: 1.5;
+}
+
+.secondaryBtn {
+  flex: 1;
+  border: 2px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.primaryBtn:hover,
+.secondaryBtn:hover,
+.stepperBtn:hover {
+  transform: translateY(-1px);
+}
+
+.primaryBtn:hover {
+  box-shadow: 0 4px 16px rgba(255, 87, 34, 0.35);
+}
+
+@media (max-width: 360px) {
+  .modal {
+    padding: var(--sp-4);
+  }
+
+  .title {
+    font-size: 34px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .actions .primaryBtn,
+  .secondaryBtn {
+    width: 100%;
+    flex: none;
+  }
+}

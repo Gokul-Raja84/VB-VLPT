@@ -42,6 +42,18 @@ export default function Layout() {
             </svg>
             <span className={styles.label}>Shuffle</span>
           </NavLink>
+
+          <NavLink to="/tournament" className={({ isActive }) => `${styles.tab} ${isActive ? styles.active : ''}`}>
+            {/* Trophy icon */}
+            <svg className={styles.icon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M8 21h8"/>
+              <path d="M12 17v4"/>
+              <path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/>
+              <path d="M7 7H4a2 2 0 0 0 2 3.46"/>
+              <path d="M17 7h3a2 2 0 0 1-2 3.46"/>
+            </svg>
+            <span className={styles.label}>Tournament</span>
+          </NavLink>
         </div>
 
         <div className={styles.credit}>

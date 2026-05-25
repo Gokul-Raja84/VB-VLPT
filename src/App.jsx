@@ -5,6 +5,7 @@ import CheckinPage from './pages/CheckinPage/CheckinPage'
 import RosterPage from './pages/RosterPage/RosterPage'
 import ShufflePage from './pages/ShufflePage/ShufflePage'
 import CourtOrderPage from './pages/CourtOrderPage/CourtOrderPage'
+import TournamentPage from './pages/TournamentPage/TournamentPage'
 import { useRoster } from './hooks/useRoster'
 import { useCheckin } from './hooks/useCheckin'
 import { useTheme } from './hooks/useTheme'
@@ -62,6 +63,10 @@ export default function App() {
           }
         />
         <Route path="/court-order" element={<CourtOrderPage />} />
+        <Route
+          path="/tournament"
+          element={<TournamentPage {...sharedThemeProps} />}
+        />
       </Route>
     </Routes>
   )

@@ -3,6 +3,12 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import CourtMatchCard from '../../components/CourtMatchCard/CourtMatchCard'
 import styles from './CourtOrderPage.module.css'
 
+/**
+ * @typedef {import('../../models/tournament').TournamentTeam} TournamentTeam
+ * @typedef {{ teamA: TournamentTeam, teamB: TournamentTeam | null }} CourtMatch
+ * @typedef {{ label: string, matches: CourtMatch[] }} CourtRound
+ */
+
 // Generate round robin matches
 function generateRoundRobin(teams) {
   const matches = []
