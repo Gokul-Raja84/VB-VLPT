@@ -18,7 +18,9 @@ export function usePIN() {
   const verifyPIN = useCallback((input) => {
     if (input === pin) {
       setVerified(true)
-      try { sessionStorage.setItem(SESSION_KEY, '1') } catch {}
+      try { sessionStorage.setItem(SESSION_KEY, '1') } catch (error) {
+        console.warn('Unable to save PIN verification state', error)
+      }
       return true
     }
     return false
@@ -30,7 +32,9 @@ export function usePIN() {
     try {
       localStorage.setItem(PIN_KEY, newPin)
       sessionStorage.setItem(SESSION_KEY, '1')
-    } catch {}
+    } catch (error) {
+      console.warn('Unable to save PIN', error)
+    }
   }, [])
 
   const resetPIN = useCallback(() => {
@@ -39,12 +43,16 @@ export function usePIN() {
     try {
       localStorage.removeItem(PIN_KEY)
       sessionStorage.removeItem(SESSION_KEY)
-    } catch {}
+    } catch (error) {
+      console.warn('Unable to reset PIN', error)
+    }
   }, [])
 
   const skipVerification = useCallback(() => {
     setVerified(true)
-    try { sessionStorage.setItem(SESSION_KEY, '1') } catch {}
+    try { sessionStorage.setItem(SESSION_KEY, '1') } catch (error) {
+      console.warn('Unable to save PIN verification state', error)
+    }
   }, [])
 
   return { isPINSet, isPINVerified, requiresPIN, verifyPIN, setPIN, resetPIN, skipVerification }

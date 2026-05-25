@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styles from './ShuffleButton.module.css'
 
-export default function ShuffleButton({ onClick, disabled, disabledReason, isDark }) {
+export default function ShuffleButton({ onClick, disabled, disabledReason }) {
   const [animating, setAnimating] = useState(false)
 
   const handleClick = () => {

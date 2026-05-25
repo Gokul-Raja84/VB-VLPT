@@ -6,39 +6,41 @@ function load() {
   try { return new Set(JSON.parse(sessionStorage.getItem(KEY)) || []) } catch { return new Set() }
 }
 function save(s) {
-  try { sessionStorage.setItem(KEY, JSON.stringify([...s])) } catch {}
+  try { sessionStorage.setItem(KEY, JSON.stringify([...s])) } catch (error) {
+    console.warn('Unable to save check-in state', error)
+  }
 }
 
 export function useCheckin(players) {
   const [checkedIn, setCheckedIn] = useState(load)
+  const playerIds = useMemo(() => new Set(players.map(p => p.id)), [players])
+  const activeCheckedIn = useMemo(
+    () => new Set([...checkedIn].filter(id => playerIds.has(id))),
+    [checkedIn, playerIds]
+  )
 
-  // Auto-remove deleted players
+  // Keep persisted check-ins pruned when roster entries are deleted.
   useEffect(() => {
-    const ids = new Set(players.map(p => p.id))
-    setCheckedIn(prev => {
-      const next = new Set([...prev].filter(id => ids.has(id)))
-      if (next.size !== prev.size) { save(next); return next }
-      return prev
-    })
-  }, [players])
+    if (activeCheckedIn.size !== checkedIn.size) save(activeCheckedIn)
+  }, [activeCheckedIn, checkedIn])
 
   const toggle = useCallback((id) => {
     setCheckedIn(prev => {
-      const next = new Set(prev)
+      const next = new Set([...prev].filter(playerId => playerIds.has(playerId)))
       next.has(id) ? next.delete(id) : next.add(id)
       save(next)
       return next
     })
-  }, [])
+  }, [playerIds])
 
-  const isCheckedIn = useCallback((id) => checkedIn.has(id), [checkedIn])
+  const isCheckedIn = useCallback((id) => activeCheckedIn.has(id), [activeCheckedIn])
 
   const checkedInPlayers = useMemo(
-    () => players.filter(p => checkedIn.has(p.id)),
-    [players, checkedIn]
+    () => players.filter(p => activeCheckedIn.has(p.id)),
+    [players, activeCheckedIn]
   )
 
   const clearAll = useCallback(() => { setCheckedIn(new Set()); save(new Set()) }, [])
 
-  return { checkedIn, toggle, isCheckedIn, checkedInPlayers, clearAll, count: checkedIn.size }
+  return { checkedIn: activeCheckedIn, toggle, isCheckedIn, checkedInPlayers, clearAll, count: activeCheckedIn.size }
 }

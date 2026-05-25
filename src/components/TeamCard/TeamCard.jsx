@@ -161,7 +161,7 @@ export default function TeamCard({
                       e.dataTransfer.dropEffect = "none";
                       e.currentTarget.classList.remove(styles.dragOver);
                     }
-                  } catch (err) {
+                  } catch {
                     e.currentTarget.classList.remove(styles.dragOver);
                   }
                 }}

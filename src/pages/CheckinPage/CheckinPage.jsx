@@ -9,7 +9,7 @@ import styles from './CheckinPage.module.css'
 
 export default function CheckinPage({
   players, toggle, isCheckedIn, checkedInPlayers, clearAll, numTeams, setNumTeams,
-  theme, toggleTheme, isDark,
+  toggleTheme, isDark,
 }) {
   const navigate = useNavigate()
 

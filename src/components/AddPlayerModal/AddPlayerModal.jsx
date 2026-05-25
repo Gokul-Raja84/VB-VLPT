@@ -3,21 +3,29 @@ import { ROLE_META, ROLE_ORDER } from '../../constants'
 import styles from './AddPlayerModal.module.css'
 
 export default function AddPlayerModal({ open, onClose, onSave, editPlayer, existingNames = [] }) {
-  const [name, setName] = useState('')
-  const [role, setRole] = useState('')
+  if (!open) return null
+
+  return (
+    <AddPlayerForm
+      key={editPlayer?.id ?? 'new-player'}
+      onClose={onClose}
+      onSave={onSave}
+      editPlayer={editPlayer}
+      existingNames={existingNames}
+    />
+  )
+}
+
+function AddPlayerForm({ onClose, onSave, editPlayer, existingNames }) {
+  const [name, setName] = useState(editPlayer?.name ?? '')
+  const [role, setRole] = useState(editPlayer?.role ?? '')
   const [error, setError] = useState('')
   const inputRef = useRef(null)
 
   useEffect(() => {
-    if (open) {
-      setName(editPlayer?.name ?? '')
-      setRole(editPlayer?.role ?? '')
-      setError('')
-      setTimeout(() => inputRef.current?.focus(), 80)
-    }
-  }, [open, editPlayer])
-
-  if (!open) return null
+    const focusTimer = setTimeout(() => inputRef.current?.focus(), 80)
+    return () => clearTimeout(focusTimer)
+  }, [])
 
   const handleSave = () => {
     const trimmed = name.trim()

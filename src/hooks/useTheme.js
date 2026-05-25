@@ -10,7 +10,9 @@ export function useTheme() {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
-    try { localStorage.setItem(KEY, theme) } catch {}
+    try { localStorage.setItem(KEY, theme) } catch (error) {
+      console.warn('Unable to save theme', error)
+    }
   }, [theme])
 
   const toggleTheme = useCallback(() => {

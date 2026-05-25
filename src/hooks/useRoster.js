@@ -8,7 +8,9 @@ export function useRoster() {
   })
 
   useEffect(() => {
-    try { localStorage.setItem(KEY, JSON.stringify(players)) } catch {}
+    try { localStorage.setItem(KEY, JSON.stringify(players)) } catch (error) {
+      console.warn('Unable to save roster', error)
+    }
   }, [players])
 
   const addPlayer = useCallback((name, role) => {

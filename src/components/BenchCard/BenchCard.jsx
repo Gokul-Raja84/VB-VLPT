@@ -17,6 +17,7 @@ export default function BenchCard({
         <span className={styles.count}>
           {bench.length} player{bench.length !== 1 ? "s" : ""}
         </span>
+        n
       </div>
       <div className={styles.list}>
         {bench.map((p) => (
@@ -48,7 +49,7 @@ export default function BenchCard({
                   e.dataTransfer.dropEffect = "none";
                   e.currentTarget.classList.remove(styles.dragOver);
                 }
-              } catch (err) {
+              } catch {
                 e.currentTarget.classList.remove(styles.dragOver);
               }
             }}

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import RoleBadge from "../RoleBadge/RoleBadge";
 import styles from "./SwapModal.module.css";
 

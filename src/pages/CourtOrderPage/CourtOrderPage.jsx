@@ -59,7 +59,9 @@ export default function CourtOrderPage() {
   const stateTeams = location.state?.teams
   useEffect(() => {
     if (stateTeams) {
-      try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(stateTeams)) } catch {}
+      try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(stateTeams)) } catch (error) {
+        console.warn('Unable to save court teams', error)
+      }
     }
   }, [stateTeams])
 

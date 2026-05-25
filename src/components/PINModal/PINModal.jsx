@@ -1,17 +1,18 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import styles from './PINModal.module.css'
 
 const DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9, null, 0, 'del']
 
 // mode: 'enter' | 'set' | 'confirm'
-export default function PINModal({ mode, onVerify, onSet, onSkip, onReset, wrongCount = 0 }) {
+export default function PINModal(props) {
+  return <PINModalContent key={props.mode} {...props} />
+}
+
+function PINModalContent({ mode, onVerify, onSet, onSkip, onReset }) {
   const [input, setInput] = useState('')
-  const [confirmInput, setConfirmInput] = useState('')
   const [phase, setPhase] = useState('set1') // 'set1' | 'set2'
   const [shake, setShake] = useState(false)
   const [firstPin, setFirstPin] = useState('')
-
-  useEffect(() => { setInput(''); setConfirmInput(''); setPhase('set1'); setFirstPin('') }, [mode])
 
   const triggerShake = () => {
     setShake(true)

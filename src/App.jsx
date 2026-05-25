@@ -12,7 +12,7 @@ import { usePIN } from './hooks/usePIN'
 
 export default function App() {
   const { players, addPlayer, updatePlayer, deletePlayer } = useRoster()
-  const { toggle, isCheckedIn, checkedInPlayers, count, clearAll } = useCheckin(players)
+  const { toggle, isCheckedIn, checkedInPlayers, clearAll } = useCheckin(players)
   const { theme, toggleTheme, isDark } = useTheme()
   const pinHook = usePIN()
   const [numTeams, setNumTeams] = useState(2)

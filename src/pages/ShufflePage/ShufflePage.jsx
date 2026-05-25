@@ -8,7 +8,6 @@ import BenchCard from "../../components/BenchCard/BenchCard";
 import SwapModal from "../../components/SwapModal/SwapModal";
 import ReadinessBar from "../../components/ReadinessBar/ReadinessBar";
 import ThemeToggle from "../../components/ThemeToggle/ThemeToggle";
-import html2canvas from "html2canvas-pro";
 import styles from "./ShufflePage.module.css";
 
 export default function ShufflePage({
@@ -23,6 +22,10 @@ export default function ShufflePage({
   const [bench, setBench] = useState([]);
   const [useFunNames, setUseFunNames] = useState(true);
   const [shuffleKey, setShuffleKey] = useState(0);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [selectedBenchPlayer, setSelectedBenchPlayer] = useState(null);
+  const [customTeamNames, setCustomTeamNames] = useState({});
+  const [editingTeamId, setEditingTeamId] = useState(null);
   const teamsRef = useRef(null);
 
   // Redirect if no players
@@ -54,11 +57,6 @@ export default function ShufflePage({
       setEditingTeamId(null);
     }
   }, [checkedInPlayers, numTeams, useFunNames]);
-
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [selectedBenchPlayer, setSelectedBenchPlayer] = useState(null);
-  const [customTeamNames, setCustomTeamNames] = useState({});
-  const [editingTeamId, setEditingTeamId] = useState(null);
 
   // Edit Mode state
   const [tweakedTeams, setTweakedTeams] = useState(null);
@@ -199,6 +197,7 @@ export default function ShufflePage({
     setIsGenerating(true);
     try {
       await new Promise((r) => setTimeout(r, 200)); // Wait for UI rendering
+      const { default: html2canvas } = await import("html2canvas-pro");
 
       const canvas = await html2canvas(teamsRef.current, {
         backgroundColor: isDark ? "#0D1117" : "#FFFFFF",
