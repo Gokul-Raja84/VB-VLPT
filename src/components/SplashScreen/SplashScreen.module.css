@@ -1,0 +1,358 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(77, 126, 255, 0.2), transparent 34%),
+    radial-gradient(circle at 50% 78%, rgba(255, 208, 0, 0.08), transparent 30%),
+    #080e1a;
+  color: #fff;
+  opacity: 1;
+  transition: opacity var(--splash-fade-out) var(--ease-smooth);
+}
+
+.overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+}
+
+.exiting {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.netLayer {
+  position: absolute;
+  inset: -6vh -6vw;
+  opacity: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.085) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: clamp(34px, 9vw, 72px) clamp(22px, 6vw, 44px);
+  filter: drop-shadow(0 0 10px rgba(77, 126, 255, 0.14));
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 82%, transparent 100%);
+  transform: perspective(900px) rotateX(8deg) translate3d(0, 12px, 0);
+  animation: netReveal var(--net-reveal-duration) var(--net-reveal-delay) var(--ease-smooth) forwards;
+}
+
+.stage {
+  position: relative;
+  width: min(100%, var(--max-width));
+  height: min(100dvh, 760px);
+  min-height: 560px;
+  isolation: isolate;
+  overflow: visible;
+}
+
+.topTag {
+  position: absolute;
+  top: calc(var(--sp-8) + env(safe-area-inset-top, 0px));
+  left: 50%;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translate(-50%, 8px);
+  animation: topTagIn var(--eyebrow-duration) var(--eyebrow-delay) ease-out forwards;
+}
+
+.brandWrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 35%;
+  overflow: visible;
+  padding: 0 var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transform: translateY(-50%);
+}
+
+.credit {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.brand {
+  position: relative;
+  display: inline-block;
+  margin-top: var(--sp-2);
+  padding: 0 0.18em 0 0.05em;
+  overflow: visible;
+  color: #ffd000;
+  font-family: var(--font-display);
+  font-size: clamp(86px, 27vw, 142px);
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: -0.055em;
+  line-height: 0.82;
+  opacity: 0;
+  text-transform: uppercase;
+  transform: translateY(28px) scale(0.94);
+  filter:
+    drop-shadow(0 0 12px rgba(255, 208, 0, 0.16))
+    drop-shadow(0 0 18px rgba(77, 126, 255, 0.14));
+  animation: brandSlam var(--logo-reveal-duration) var(--logo-reveal-delay) var(--ease-snappy) forwards;
+}
+
+.brand::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0 0.18em 0 0.05em;
+  color: transparent;
+  background:
+    linear-gradient(
+      115deg,
+      #ffd000 0%,
+      #ffd000 18%,
+      #4d7eff 38%,
+      #ffd000 58%,
+      #4d7eff 78%,
+      #ffd000 100%
+    );
+  background-size: 220% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  pointer-events: none;
+  animation: brandSweep var(--logo-shine-duration) var(--logo-shine-delay) ease-out forwards;
+}
+
+.ballTrack {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ball {
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  width: clamp(54px, 16vw, 76px);
+  height: clamp(54px, 16vw, 76px);
+  color: #fff;
+  opacity: 0;
+  will-change: transform, opacity, filter;
+  transform-origin: center bottom;
+  animation: ballBounceExit var(--ball-duration) var(--ball-delay) both;
+}
+
+.ball::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: var(--radius-full);
+  background: radial-gradient(circle, rgba(255, 208, 0, 0.14), transparent 62%);
+  opacity: 0;
+  animation: ballAura var(--ball-duration) var(--ball-delay) both;
+}
+
+.ball svg {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.36));
+}
+
+.impact {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: 98px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  background: radial-gradient(ellipse, rgba(255, 208, 0, 0.22), transparent 68%);
+  filter: blur(1px);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.35);
+  animation: impactPulse var(--ball-duration) var(--ball-delay) both;
+}
+
+.credit {
+  position: absolute;
+  left: var(--sp-4);
+  right: var(--sp-4);
+  bottom: calc(var(--sp-8) + env(safe-area-inset-bottom, 0px));
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 11px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: fadeLift var(--credit-duration) var(--credit-delay) ease-out forwards;
+}
+
+@keyframes netReveal {
+  from {
+    opacity: 0;
+    transform: perspective(900px) rotateX(8deg) translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(900px) rotateX(8deg) translate3d(0, 0, 0);
+  }
+}
+
+@keyframes brandSlam {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes brandSweep {
+  0% {
+    opacity: 1;
+    background-position: 0% 50%;
+  }
+  78% {
+    opacity: 1;
+    background-position: 100% 50%;
+  }
+  100% {
+    opacity: 0;
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes ballBounceExit {
+  0% {
+    opacity: 0;
+    filter: blur(2px);
+    transform: translate3d(52vw, -58vh, 0) scaleX(0.96) scaleY(1.06) rotate(-28deg);
+  }
+  18% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(30vw, -34vh, 0) scaleX(0.98) scaleY(1.04) rotate(8deg);
+  }
+  36% {
+    opacity: 1;
+    transform: translate3d(9vw, -10vh, 0) scaleX(1.02) scaleY(0.98) rotate(54deg);
+  }
+  48% {
+    opacity: 1;
+    transform: translate3d(0, 4vh, 0) scaleX(1.24) scaleY(0.72) rotate(82deg);
+  }
+  58% {
+    transform: translate3d(-9vw, -5vh, 0) scaleX(0.86) scaleY(1.14) rotate(118deg);
+  }
+  76% {
+    opacity: 1;
+    transform: translate3d(-28vw, 12vh, 0) scaleX(1) scaleY(1) rotate(176deg);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(1px);
+    transform: translate3d(-58vw, 46vh, 0) scaleX(0.96) scaleY(1.04) rotate(252deg);
+  }
+}
+
+@keyframes ballAura {
+  0%,
+  38%,
+  64%,
+  100% {
+    opacity: 0;
+  }
+  48% {
+    opacity: 1;
+  }
+}
+
+@keyframes impactPulse {
+  0%,
+  42%,
+  62%,
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.35);
+  }
+  48% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  56% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.7);
+  }
+}
+
+@keyframes fadeLift {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes topTagIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (min-width: 520px) {
+  .stage {
+    width: min(100vw, 520px);
+  }
+}
+
+@media (max-height: 620px) {
+  .stage {
+    min-height: 100dvh;
+  }
+
+  .brandWrap {
+    top: 33%;
+  }
+
+  .ball {
+    top: 34%;
+  }
+
+  .credit {
+    bottom: var(--sp-5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .netLayer,
+  .topTag,
+  .brand,
+  .ball,
+  .ball::after,
+  .impact,
+  .credit {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+}

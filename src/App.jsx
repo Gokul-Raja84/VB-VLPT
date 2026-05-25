@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout/Layout'
+import SplashScreen from './components/SplashScreen/SplashScreen'
 import CheckinPage from './pages/CheckinPage/CheckinPage'
 import RosterPage from './pages/RosterPage/RosterPage'
 import ShufflePage from './pages/ShufflePage/ShufflePage'
@@ -12,6 +13,7 @@ import { useTheme } from './hooks/useTheme'
 import { usePIN } from './hooks/usePIN'
 
 export default function App() {
+  const [showSplash, setShowSplash] = useState(true)
   const { players, addPlayer, updatePlayer, deletePlayer } = useRoster()
   const { toggle, isCheckedIn, checkedInPlayers, clearAll } = useCheckin(players)
   const { theme, toggleTheme, isDark } = useTheme()
@@ -19,55 +21,59 @@ export default function App() {
   const [numTeams, setNumTeams] = useState(2)
 
   const sharedThemeProps = { theme, toggleTheme, isDark }
+  const handleSplashComplete = useCallback(() => setShowSplash(false), [])
 
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route
-          path="/"
-          element={
-            <CheckinPage
-              players={players}
-              toggle={toggle}
-              isCheckedIn={isCheckedIn}
-              checkedInPlayers={checkedInPlayers}
-              clearAll={clearAll}
-              numTeams={numTeams}
-              setNumTeams={setNumTeams}
-              {...sharedThemeProps}
-            />
-          }
-        />
-        <Route
-          path="/roster"
-          element={
-            <RosterPage
-              players={players}
-              addPlayer={addPlayer}
-              updatePlayer={updatePlayer}
-              deletePlayer={deletePlayer}
-              pinHook={pinHook}
-              {...sharedThemeProps}
-            />
-          }
-        />
-        <Route
-          path="/shuffle"
-          element={
-            <ShufflePage
-              checkedInPlayers={checkedInPlayers}
-              numTeams={numTeams}
-              setNumTeams={setNumTeams}
-              {...sharedThemeProps}
-            />
-          }
-        />
-        <Route path="/court-order" element={<CourtOrderPage />} />
-        <Route
-          path="/tournament"
-          element={<TournamentPage {...sharedThemeProps} />}
-        />
-      </Route>
-    </Routes>
+    <>
+      {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
+      <Routes>
+        <Route element={<Layout />}>
+          <Route
+            path="/"
+            element={
+              <CheckinPage
+                players={players}
+                toggle={toggle}
+                isCheckedIn={isCheckedIn}
+                checkedInPlayers={checkedInPlayers}
+                clearAll={clearAll}
+                numTeams={numTeams}
+                setNumTeams={setNumTeams}
+                {...sharedThemeProps}
+              />
+            }
+          />
+          <Route
+            path="/roster"
+            element={
+              <RosterPage
+                players={players}
+                addPlayer={addPlayer}
+                updatePlayer={updatePlayer}
+                deletePlayer={deletePlayer}
+                pinHook={pinHook}
+                {...sharedThemeProps}
+              />
+            }
+          />
+          <Route
+            path="/shuffle"
+            element={
+              <ShufflePage
+                checkedInPlayers={checkedInPlayers}
+                numTeams={numTeams}
+                setNumTeams={setNumTeams}
+                {...sharedThemeProps}
+              />
+            }
+          />
+          <Route path="/court-order" element={<CourtOrderPage />} />
+          <Route
+            path="/tournament"
+            element={<TournamentPage {...sharedThemeProps} />}
+          />
+        </Route>
+      </Routes>
+    </>
   )
 }
