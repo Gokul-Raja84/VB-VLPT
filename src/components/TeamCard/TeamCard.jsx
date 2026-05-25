@@ -14,6 +14,10 @@ export default function TeamCard({
   onEditStart,
   onEditSave,
   onEditCancel,
+  isEditMode = false,
+  selectedPlayer = null,
+  onPlayerSelect = null,
+  onPlayerDrop = null,
 }) {
   const [editValue, setEditValue] = useState(displayName || team.name);
 
@@ -22,8 +26,17 @@ export default function TeamCard({
       ROLE_ORDER.indexOf(a.assignedRole) - ROLE_ORDER.indexOf(b.assignedRole),
   );
 
-  const handlePlayerClick = (playerIndex) => {
+  const handlePlayerClick = (p) => {
+    // Edit mode takes priority - when in edit mode, select player for swapping
+    if (isEditMode && onPlayerSelect) {
+      // Pass the raw player object; ShufflePage will wrap with the team id
+      onPlayerSelect(p);
+      return;
+    }
+    // Original swap mode - swap bench player with team player
     if (selectedBenchPlayer && onSwap) {
+      // Find the player index in sorted array
+      const playerIndex = sorted.findIndex((sp) => sp.id === p.id);
       onSwap(teamIndex, playerIndex);
     }
   };
@@ -98,31 +111,99 @@ export default function TeamCard({
           )}
         </div>
         <div className={styles.playerList}>
-          {sorted.map((p, idx) => (
-            <div
-              key={p.id}
-              className={`${styles.playerRow} ${
-                selectedBenchPlayer && selectedBenchPlayer.role === p.role
-                  ? styles.swappable
-                  : ""
-              }`}
-              onClick={() => handlePlayerClick(idx)}
-              style={{
-                cursor:
-                  selectedBenchPlayer && selectedBenchPlayer.role === p.role
-                    ? "pointer"
-                    : "default",
-              }}
-              title={
-                selectedBenchPlayer && selectedBenchPlayer.role === p.role
-                  ? `Click to swap ${selectedBenchPlayer.name} with ${p.name}`
-                  : ""
-              }
-            >
-              <RoleBadge role={p.assignedRole} short />
-              <span className={styles.playerName}>{p.name}</span>
-            </div>
-          ))}
+          {sorted.map((p) => {
+            const isSelected =
+              selectedPlayer?.player?.id === p.id &&
+              selectedPlayer?.fromTeamId === team.id;
+            const isSwapTarget =
+              selectedPlayer &&
+              selectedPlayer.player.role === p.role &&
+              !isSelected;
+
+            return (
+              <div
+                key={p.id}
+                draggable={isEditMode}
+                className={`${styles.playerRow} ${
+                  isEditMode
+                    ? isSelected
+                      ? styles.selected
+                      : isSwapTarget
+                        ? styles.swapTarget
+                        : ""
+                    : selectedBenchPlayer && selectedBenchPlayer.role === p.role
+                      ? styles.swappable
+                      : ""
+                }`}
+                onClick={() => handlePlayerClick(p)}
+                onDragStart={(e) => {
+                  if (!isEditMode) return;
+                  e.dataTransfer.setData(
+                    "application/json",
+                    JSON.stringify({ player: p, fromTeamId: team.id }),
+                  );
+                  e.dataTransfer.effectAllowed = "move";
+                  e.currentTarget.classList.add(styles.dragging);
+                }}
+                onDragEnd={(e) => {
+                  e.currentTarget.classList.remove(styles.dragging);
+                }}
+                onDragOver={(e) => {
+                  if (!isEditMode) return;
+                  e.preventDefault();
+                  const raw = e.dataTransfer.getData("application/json");
+                  try {
+                    const drag = raw ? JSON.parse(raw) : null;
+                    if (drag && drag.player && drag.player.role === p.role) {
+                      e.dataTransfer.dropEffect = "move";
+                      e.currentTarget.classList.add(styles.dragOver);
+                    } else {
+                      e.dataTransfer.dropEffect = "none";
+                      e.currentTarget.classList.remove(styles.dragOver);
+                    }
+                  } catch (err) {
+                    e.currentTarget.classList.remove(styles.dragOver);
+                  }
+                }}
+                onDragLeave={(e) =>
+                  e.currentTarget.classList.remove(styles.dragOver)
+                }
+                onDrop={(e) => {
+                  if (!isEditMode) return;
+                  e.preventDefault();
+                  e.currentTarget.classList.remove(styles.dragOver);
+                  const raw = e.dataTransfer.getData("application/json");
+                  if (!raw) return;
+                  try {
+                    const drag = JSON.parse(raw);
+                    if (drag.player.role !== p.role) return;
+                    if (onPlayerDrop) {
+                      onPlayerDrop(drag, { player: p, fromTeamId: team.id });
+                    }
+                  } catch (err) {
+                    console.error("drop parse error", err);
+                  }
+                }}
+                style={{
+                  cursor:
+                    isEditMode ||
+                    (selectedBenchPlayer && selectedBenchPlayer.role === p.role)
+                      ? "pointer"
+                      : "default",
+                }}
+                title={
+                  isEditMode
+                    ? "Drag to swap with another same-role player"
+                    : selectedBenchPlayer && selectedBenchPlayer.role === p.role
+                      ? `Click to swap ${selectedBenchPlayer.name} with ${p.name}`
+                      : ""
+                }
+              >
+                <RoleBadge role={p.assignedRole} short />
+                <span className={styles.playerName}>{p.name}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

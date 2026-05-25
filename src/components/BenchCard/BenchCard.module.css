@@ -60,3 +60,14 @@
   font-size: var(--text-sm);
   color: var(--text-muted);
 }
+
+/* Drag visuals */
+.row.dragOver {
+  border: 2px dashed var(--primary);
+  background: rgba(26, 63, 216, 0.06);
+  box-shadow: 0 6px 14px rgba(26, 63, 216, 0.08);
+}
+
+.row.dragging {
+  opacity: 0.6;
+}

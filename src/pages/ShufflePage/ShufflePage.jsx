@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { shuffleTeams, validateShuffle } from "../../utils/shuffle";
+import { executeSwap } from "../../utils/swap";
 import ShuffleButton from "../../components/ShuffleButton/ShuffleButton";
 import TeamCard from "../../components/TeamCard/TeamCard";
 import BenchCard from "../../components/BenchCard/BenchCard";
+import SwapModal from "../../components/SwapModal/SwapModal";
 import ReadinessBar from "../../components/ReadinessBar/ReadinessBar";
 import ThemeToggle from "../../components/ThemeToggle/ThemeToggle";
 import html2canvas from "html2canvas-pro";
@@ -58,6 +60,18 @@ export default function ShufflePage({
   const [customTeamNames, setCustomTeamNames] = useState({});
   const [editingTeamId, setEditingTeamId] = useState(null);
 
+  // Edit Mode state
+  const [tweakedTeams, setTweakedTeams] = useState(null);
+  const [tweakedBench, setTweakedBench] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [showRevertConfirm, setShowRevertConfirm] = useState(false);
+
+  // Derived
+  const displayTeams = tweakedTeams ?? teams;
+  const displayBench = tweakedBench ?? bench;
+  const hasUnsavedTweaks = tweakedTeams !== null;
+
   const handleEditTeamName = (teamId, newName) => {
     if (!newName.trim()) return;
     setCustomTeamNames((prev) => ({
@@ -103,6 +117,81 @@ export default function ShufflePage({
     setTeams(newTeams);
     setBench(newBench);
     setSelectedBenchPlayer(null);
+  };
+
+  // Edit Mode Handlers
+  const handleEnterEditMode = () => {
+    if (!teams || !bench) return;
+    setIsEditMode(true);
+  };
+
+  const handleExitEditMode = () => {
+    setIsEditMode(false);
+    setSelectedPlayer(null);
+  };
+
+  const handleRevert = () => {
+    setShowRevertConfirm(false);
+    setTweakedTeams(null);
+    setTweakedBench(null);
+    setIsEditMode(false);
+    setSelectedPlayer(null);
+  };
+
+  const handlePlayerSelected = (team, playerData) => {
+    setSelectedPlayer({
+      player: playerData,
+      fromTeamId: team.id,
+    });
+  };
+
+  const handleExecuteSwap = (targetPlayer) => {
+    if (!selectedPlayer || !displayTeams) return;
+
+    try {
+      const { teams: newTeams, bench: newBench } = executeSwap(
+        selectedPlayer,
+        targetPlayer,
+        displayTeams,
+        displayBench,
+      );
+      setTweakedTeams(newTeams);
+      setTweakedBench(newBench);
+      setSelectedPlayer(null);
+    } catch (err) {
+      console.error("Swap error:", err);
+      alert("Swap failed: " + err.message);
+    }
+  };
+
+  // Drag-and-drop swap handler (role-locked)
+  const normalizeId = (id) =>
+    id === "bench" ? "bench" : typeof id === "string" ? parseInt(id, 10) : id;
+
+  const handleDragSwap = (dragData, targetData) => {
+    if (!displayTeams) return;
+    const playerA = {
+      player: dragData.player,
+      fromTeamId: normalizeId(dragData.fromTeamId),
+    };
+    const playerB = {
+      player: targetData.player,
+      fromTeamId: normalizeId(targetData.fromTeamId),
+    };
+
+    try {
+      const { teams: newTeams, bench: newBench } = executeSwap(
+        playerA,
+        playerB,
+        displayTeams,
+        displayBench,
+      );
+      setTweakedTeams(newTeams);
+      setTweakedBench(newBench);
+    } catch (err) {
+      console.error("Swap failed", err);
+      alert("Swap failed: " + err.message);
+    }
   };
 
   const handleDownload = async () => {
@@ -200,7 +289,7 @@ export default function ShufflePage({
               width: "auto",
             }}
           >
-            {teams.map((team) => (
+            {displayTeams.map((team) => (
               <TeamCard
                 key={`${shuffleKey}-${team.id}`}
                 team={team}
@@ -210,9 +299,62 @@ export default function ShufflePage({
             ))}
           </div>
 
+          {/* Edit Mode Bar */}
+          {teams && (
+            <div className={styles.editModeBar}>
+              <button
+                className={`${styles.editToggleBtn} ${isEditMode ? styles.editActive : ""} ${hasUnsavedTweaks ? styles.hasTweaks : ""}`}
+                onClick={() =>
+                  isEditMode ? handleExitEditMode() : handleEnterEditMode()
+                }
+              >
+                <span className={styles.editIcon}>✏️</span>
+                {isEditMode ? "DONE" : "EDIT TEAMS"}
+              </button>
+
+              {hasUnsavedTweaks && (
+                <button
+                  className={styles.revertBtn}
+                  onClick={() => setShowRevertConfirm(true)}
+                >
+                  ↩ REVERT
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* Revert Confirmation */}
+          {showRevertConfirm && (
+            <div className={styles.revertConfirmCard}>
+              <p className={styles.revertConfirmText}>
+                Reset teams to original shuffle?
+              </p>
+              <p className={styles.revertConfirmSubtext}>
+                Your manual changes will be lost.
+              </p>
+              <div className={styles.revertConfirmActions}>
+                <button
+                  className={styles.revertCancelBtn}
+                  onClick={() => setShowRevertConfirm(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className={styles.revertConfirmBtn}
+                  onClick={handleRevert}
+                >
+                  Yes, Reset
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Visible results - teams vertical, with bench */}
-          <div className={styles.results} key={shuffleKey}>
-            {teams.map((team, i) => (
+          <div
+            className={`${styles.results} ${isEditMode ? styles.editModeActive : ""}`}
+            key={shuffleKey}
+          >
+            {displayTeams.map((team, i) => (
               <TeamCard
                 key={`${shuffleKey}-${team.id}`}
                 team={team}
@@ -225,14 +367,33 @@ export default function ShufflePage({
                 onEditStart={() => setEditingTeamId(team.id)}
                 onEditSave={(newName) => handleEditTeamName(team.id, newName)}
                 onEditCancel={() => setEditingTeamId(null)}
+                isEditMode={isEditMode}
+                selectedPlayer={selectedPlayer}
+                onPlayerSelect={(playerData) =>
+                  handlePlayerSelected(team, playerData)
+                }
+                onPlayerDrop={handleDragSwap}
               />
             ))}
             <BenchCard
-              bench={bench}
+              bench={displayBench}
               selectedPlayerId={selectedBenchPlayer?.id}
               onSelectPlayer={setSelectedBenchPlayer}
+              isEditMode={isEditMode}
+              onPlayerDrop={handleDragSwap}
             />
           </div>
+
+          {/* Swap Modal - appears when player is selected in edit mode */}
+          {selectedPlayer && isEditMode && (
+            <SwapModal
+              selectedPlayer={selectedPlayer}
+              allTeams={displayTeams}
+              bench={displayBench}
+              onSwap={handleExecuteSwap}
+              onClose={() => setSelectedPlayer(null)}
+            />
+          )}
 
           <div className={styles.actionBar}>
             <button className={styles.reshuffleBtn} onClick={handleShuffle}>

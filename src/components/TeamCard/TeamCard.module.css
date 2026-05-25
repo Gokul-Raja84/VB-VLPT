@@ -132,6 +132,48 @@
   background: rgba(26, 63, 216, 0.25);
   box-shadow: 0 0 8px rgba(26, 63, 216, 0.3);
 }
+/* Drag-and-drop visuals */
+.playerRow.dragOver {
+  border: 2px dashed var(--primary);
+  background: rgba(26, 63, 216, 0.08);
+  box-shadow: 0 6px 18px rgba(26, 63, 216, 0.12);
+}
+
+/* Edit mode styles */
+.playerRow.selected {
+  background: var(--primary);
+  border: 2px solid var(--primary);
+  color: white;
+  box-shadow: 0 0 0 3px rgba(26, 63, 216, 0.2);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.playerRow.selected .playerName {
+  color: white;
+  font-weight: 700;
+}
+
+.playerRow.swapTarget {
+  background: rgba(26, 63, 216, 0.08);
+  border: 1.5px dashed var(--primary);
+  cursor: pointer;
+}
+
+.playerRow.swapTarget:hover {
+  background: rgba(26, 63, 216, 0.15);
+  border-style: solid;
+  box-shadow: 0 0 6px rgba(26, 63, 216, 0.2);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
 
 .playerName {
   font-weight: 600;
@@ -148,4 +190,8 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+.playerRow.dragging {
+  opacity: 0.6;
+  transform: scale(0.995);
 }

@@ -132,3 +132,159 @@
   transform: scale(1.02);
   box-shadow: 0 4px 16px rgba(255, 87, 34, 0.4);
 }
+
+/* ── EDIT MODE BAR ────────────────────────────────────── */
+.editModeBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-3);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--surface-raised);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  animation: slideDown 0.3s ease-out;
+}
+
+.editToggleBtn,
+.revertBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-1);
+  height: 40px;
+  padding: 0 var(--sp-3);
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-smooth);
+  border: 2px solid transparent;
+}
+
+.editToggleBtn {
+  flex: 1;
+  background: var(--primary-muted);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.editToggleBtn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.editToggleBtn.editActive {
+  background: var(--primary);
+  color: #fff;
+}
+
+.editToggleBtn.hasTweaks::after {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-left: 4px;
+}
+
+.editIcon {
+  font-size: 16px;
+}
+
+.revertBtn {
+  background: var(--danger-bg, rgba(255, 68, 68, 0.1));
+  border-color: var(--danger, #ff4444);
+  color: var(--danger, #ff4444);
+}
+
+.revertBtn:hover {
+  background: rgba(255, 68, 68, 0.2);
+}
+
+/* ── REVERT CONFIRMATION ──────────────────────────────── */
+.revertConfirmCard {
+  padding: var(--sp-3) var(--sp-4);
+  margin-bottom: var(--sp-3);
+  border-radius: var(--radius-md);
+  background: rgba(255, 68, 68, 0.08);
+  border: 2px solid var(--danger, #ff4444);
+  animation: slideDown 0.25s ease-out;
+}
+
+.revertConfirmText {
+  margin: 0 0 var(--sp-1) 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.revertConfirmSubtext {
+  margin: 0 0 var(--sp-3) 0;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.revertConfirmActions {
+  display: flex;
+  gap: var(--sp-2);
+}
+
+.revertCancelBtn,
+.revertConfirmBtn {
+  flex: 1;
+  height: 40px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-smooth);
+  border: 2px solid transparent;
+}
+
+.revertCancelBtn {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.revertCancelBtn:hover {
+  border-color: var(--text);
+}
+
+.revertConfirmBtn {
+  background: var(--danger, #ff4444);
+  color: #fff;
+  border-color: var(--danger, #ff4444);
+}
+
+.revertConfirmBtn:hover {
+  opacity: 0.9;
+  box-shadow: 0 2px 12px rgba(255, 68, 68, 0.3);
+}
+
+/* ── RESULTS EDIT MODE ────────────────────────────────── */
+.results.editModeActive {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
