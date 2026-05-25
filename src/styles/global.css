@@ -131,19 +131,6 @@ body {
   background: var(--bg);
 }
 
-/* Subtle dot pattern on desktop bg */
-@media (min-width: 480px) {
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
-    background-size: 24px 24px;
-    pointer-events: none;
-    z-index: 0;
-  }
-}
-
 /* ─── SR ONLY ─────────────────────────────────────── */
 .sr-only {
   position: absolute; width: 1px; height: 1px;

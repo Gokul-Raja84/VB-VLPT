@@ -1,0 +1,53 @@
+.background {
+  --net-line: rgba(26, 63, 216, 0.065);
+  --net-line-soft: rgba(26, 63, 216, 0.045);
+  --net-glow: rgba(26, 63, 216, 0.08);
+
+  position: fixed;
+  inset: -8vh -8vw;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 34%, var(--net-glow), transparent 34%),
+    linear-gradient(var(--net-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--net-line-soft) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    clamp(36px, 9vw, 76px) clamp(24px, 6vw, 48px),
+    clamp(36px, 9vw, 76px) clamp(24px, 6vw, 48px);
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 8%,
+    #000 88%,
+    transparent 100%
+  );
+  opacity: 0.82;
+  transform: perspective(1100px) rotateX(7deg) translate3d(0, 0, 0);
+  transform-origin: center top;
+}
+
+.background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.55;
+}
+
+[data-theme="dark"] .background {
+  --net-line: rgba(255, 255, 255, 0.055);
+  --net-line-soft: rgba(255, 255, 255, 0.04);
+  --net-glow: rgba(77, 126, 255, 0.13);
+
+  opacity: 1;
+}
+
+@media (max-width: 480px) {
+  .background {
+    inset: -6vh -10vw;
+    opacity: 0.72;
+  }
+}

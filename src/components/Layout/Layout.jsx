@@ -1,9 +1,11 @@
 import { NavLink, Outlet } from 'react-router-dom'
+import GlobalNetBackground from '../GlobalNetBackground/GlobalNetBackground'
 import styles from './Layout.module.css'
 
 export default function Layout() {
   return (
     <div className={styles.root}>
+      <GlobalNetBackground />
       <main className={styles.main}>
         <Outlet />
       </main>
